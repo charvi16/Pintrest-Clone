@@ -1,0 +1,462 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background image grid */
+        .background-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(20vw, 1fr));
+            grid-gap: 1vw;
+            padding: 1vw;
+            z-index: 1;
+        }
+
+        .grid-item {
+            border-radius: 2vw;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .grid-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Dark overlay */
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+
+        /* Top navigation */
+        .nav {
+            background-color: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 8vh;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2vw;
+            z-index: 4;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2vw;
+        }
+
+        .pinterest-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5vw;
+            color: white;
+            font-size: 1.8vw;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 2.5vw;
+            height: 2.5vw;
+            background: #e60023;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .pin{
+            color: #e60023;
+        }
+
+        .explore-btn {
+            color: #000;
+            text-decoration: none;
+            font-size: 1.2vw;
+            font-weight: 600;
+            padding: 1vh 1.5vw;
+            border-radius: 2vw;
+            transition: background 0.2s;
+        }
+
+        .explore-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2vw;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2vw;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2vw;
+            font-weight: 500;
+            opacity: 0.9;
+            transition: opacity 0.2s;
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .login-btn {
+            background: #e60023;
+            color: white !important;
+            padding: 1.2vh 2vw;
+            border-radius: 2vw;
+            font-weight: 600;
+            opacity: 1 !important;
+        }
+
+        .signup-btn {
+            background: #efefef;
+            color: #333 !important;
+            padding: 1.2vh 2vw;
+            border-radius: 2vw;
+            font-weight: 600;
+            opacity: 1 !important;
+        }
+
+        /* Main content */
+        .main-content {
+            position: absolute;
+            top: 50%;
+            left: 8vw;
+            transform: translateY(-50%);
+            z-index: 3;
+            color: white;
+        }
+
+        .main-title {
+            font-size: 6vw;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 2vh;
+            max-width: 35vw;
+        }
+
+        /* Login form */
+        .login-form {
+            position: absolute;
+            top: 50%;
+            right: 8vw;
+            transform: translateY(-50%);
+            background: white;
+            border-radius: 2vw;
+            padding: 4vh 3vw;
+            width: 25vw;
+            min-width: 320px;
+            z-index: 3;
+            box-shadow: 0 1vh 4vh rgba(0, 0, 0, 0.2);
+        }
+
+        .form-title {
+            text-align: center;
+            font-size: 2vw;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3vh;
+        }
+
+        .form-group {
+            margin-bottom: 2vh;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9vw;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.5vh;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1.5vh 1.2vw;
+            border: 0.15vw solid #ddd;
+            border-radius: 1vw;
+            font-size: 1.2vw;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #0074d9;
+            box-shadow: 0 0 0 0.2vw rgba(0, 116, 217, 0.1);
+        }
+
+        .password-group {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 1vw;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5vh;
+        }
+
+        .forgot-password {
+            text-align: left;
+            margin-bottom: 3vh;
+        }
+
+        .forgot-password a {
+            color: #333;
+            text-decoration: none;
+            font-size: 0.9vw;
+            font-weight: 500;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        .login-button {
+            width: 100%;
+            background: #e60023;
+            color: white;
+            border: none;
+            padding: 1.5vh 0;
+            border-radius: 1.5vw;
+            font-size: 1.2vw;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 2vh;
+            transition: background 0.2s;
+        }
+
+        .login-button:hover {
+            background: #d50017;
+        }
+
+        .or-divider {
+            text-align: center;
+            margin: 3vh 0;
+            position: relative;
+            color: #767676;
+            font-size: 1vw;
+            font-weight: 600;
+        }
+
+        .or-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 0.1vw;
+            background: #ddd;
+            z-index: -1;
+        }
+
+        .or-divider span {
+            background: white;
+            padding: 0 1vw;
+        }
+
+        .social-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5vh;
+            margin-bottom: 3vh;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1vw;
+            padding: 1.2vh 0;
+            border: 0.1vw solid #ddd;
+            border-radius: 1.5vw;
+            background: white;
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1vw;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .social-btn:hover {
+            background: #f8f8f8;
+        }
+
+        .social-btn img {
+            width: 1.5vw;
+            height: 1.5vw;
+        }
+
+        .form-footer {
+            text-align: center;
+            font-size: 0.8vw;
+            color: #767676;
+            line-height: 1.4;
+        }
+
+        .form-footer a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .signup-link {
+            margin-top: 2vh;
+            font-weight: 500;
+        }
+
+        .signup-link a {
+            color: #e60023;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav {
+                padding: 0 4vw;
+            }
+
+            .pinterest-logo {
+                font-size: 4vw;
+            }
+
+            .logo-icon {
+                width: 6vw;
+                height: 6vw;
+            }
+
+            .explore-btn, .nav-links a {
+                font-size: 3vw;
+            }
+
+            .login-btn, .signup-btn {
+                padding: 2vh 4vw;
+                border-radius: 4vw;
+            }
+
+            .main-content {
+                left: 4vw;
+                right: 4vw;
+                text-align: center;
+            }
+
+            .main-title {
+                font-size: 12vw;
+                max-width: 90vw;
+                margin-bottom: 4vh;
+            }
+
+            .login-form {
+                position: relative;
+                top: auto;
+                right: auto;
+                transform: none;
+                width: 90vw;
+                margin: 6vh auto 0;
+                padding: 6vh 6vw;
+                border-radius: 4vw;
+            }
+
+            .form-title {
+                font-size: 5vw;
+                margin-bottom: 4vh;
+            }
+
+            .form-group label {
+                font-size: 2.5vw;
+            }
+
+            .form-input {
+                padding: 3vh 3vw;
+                font-size: 3.5vw;
+                border-radius: 2vw;
+                border-width: 0.3vw;
+            }
+
+            .forgot-password a {
+                font-size: 2.5vw;
+            }
+
+            .login-button {
+                padding: 3vh 0;
+                font-size: 3.5vw;
+                border-radius: 3vw;
+                margin-bottom: 3vh;
+            }
+
+            .or-divider {
+                font-size: 2.5vw;
+                margin: 4vh 0;
+            }
+
+            .social-btn {
+                padding: 3vh 0;
+                font-size: 3vw;
+                border-radius: 3vw;
+                gap: 2vw;
+            }
+
+            .social-btn img {
+                width: 4vw;
+                height: 4vw;
+            }
+
+            .form-footer {
+                font-size: 2.2vw;
+            }
+
+            body {
+                overflow-y: auto;
+                height: auto;
+                min-height: 100vh;
+            }
+
+            .background-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-gap: 2vw;
+                padding: 2vw;
+            }
+
+            .grid-item {
+                border-radius: 4vw;
+            }
+        }

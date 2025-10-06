@@ -1,0 +1,463 @@
+* {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        /* Header Styles */
+        .header {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 1px solid #e9e9e9;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .pinterest-logo {
+            width: 32px;
+            height: 32px;
+            background: #e60023;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .back-arrow {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .back-arrow:hover {
+            background-color: #f1f1f1;
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 800px;
+            position: relative;
+            margin: 0 20px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border: none;
+            background-color: #f1f1f1;
+            border-radius: 24px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #767676;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pins-dropdown {
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 24px;
+            transition: background-color 0.2s;
+        }
+
+        .pins-dropdown:hover {
+            background-color: #f1f1f1;
+        }
+
+        .profile-avatar-small {
+            width: 32px;
+            height: 32px;
+            background: #f4c430;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 80px;
+            width: 80px;
+            height: calc(100vh - 80px);
+            background: white;
+            border-right: 1px solid #e9e9e9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 0;
+            gap: 20px;
+        }
+
+        .sidebar-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 24px;
+        }
+
+        .sidebar-icon:hover {
+            background-color: #f1f1f1;
+        }
+
+        .sidebar-icon.active {
+            background-color: #111;
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 80px;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 100px;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: #f4c430;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0 auto 24px;
+            color: #333;
+        }
+
+        .profile-name {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .verified-badge {
+            width: 24px;
+            height: 24px;
+            background: #e60023;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .profile-instagram {
+            color: #767676;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .profile-handle {
+            color: #767676;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .follower-stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .stat {
+            font-size: 16px;
+        }
+
+        .stat-number {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .profile-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #e60023;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #cc0021;
+        }
+
+        .btn-secondary {
+            background: #f1f1f1;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e9e9e9;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 32px;
+            border-bottom: 1px solid #e9e9e9;
+        }
+
+        .tab {
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: border-color 0.2s;
+        }
+
+        .tab.active {
+            border-bottom-color: #333;
+        }
+
+        .tab:hover {
+            background-color: #f9f9f9;
+        }
+
+        /* Pinterest Grid */
+        .pins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .pin-card {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+            background: #f9f9f9;
+        }
+
+        .pin-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        .pin-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pin-card:nth-child(1) .pin-image {
+            background: linear-gradient(135deg, #d4a574 0%, #b8860b 100%);
+        }
+
+        .pin-card:nth-child(2) .pin-image {
+            background: linear-gradient(135deg, #d4a574 0%, #8b4513 100%);
+        }
+
+        .pin-card:nth-child(3) .pin-image {
+            background: linear-gradient(135deg, #f4e4bc 0%, #d4a574 100%);
+        }
+
+        .pin-card:nth-child(4) .pin-image {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+        }
+
+        .pin-card:nth-child(5) .pin-image {
+            background: linear-gradient(135deg, #4834d4 0%, #686de0 100%);
+        }
+
+        .pin-card:nth-child(6) .pin-image {
+            background: linear-gradient(135deg, #eb4d4b 0%, #6c5ce7 100%);
+        }
+
+        .pin-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .pin-card:hover .pin-overlay {
+            opacity: 1;
+        }
+
+        .pin-card:nth-child(4) .pin-overlay {
+            background: rgba(255,165,0,0.9);
+            color: #333;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .search-container {
+                margin: 0 12px;
+            }
+
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+                font-size: 40px;
+            }
+
+            .profile-name {
+                font-size: 28px;
+            }
+
+            .pins-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 12px;
+            }
+
+            .follower-stats {
+                gap: 16px;
+            }
+
+            .profile-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 8px 12px;
+            }
+
+            .search-container {
+                display: none;
+            }
+
+            .pins-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 8px;
+            }
+
+            .profile-name {
+                font-size: 24px;
+            }
+
+            .profile-avatar {
+                width: 80px;
+                height: 80px;
+                font-size: 32px;
+            }
+        }
+
+        .modal {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex; align-items: center; justify-content: center;
+}
+.modal.hidden { display: none; }
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 400px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.close {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+}

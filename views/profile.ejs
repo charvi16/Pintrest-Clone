@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pinterest Profile - <%= user.fullname %></title>
+  <link rel="stylesheet" href="/Stylesheets/profile.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="pinterest-logo">P</div>
+      <button class="back-arrow">←</button>
+      <div class="search-container">
+        <div class="search-icon">🔍</div>
+        <input type="text" class="search-bar" placeholder="Search your Pins">
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="pins-dropdown">Your Pins ▾</button>
+      <div class="profile-avatar-small">
+        <img src="/profile/dp/<%= user._id %>" alt="avatar" />
+      </div>
+    </div>
+  </header>
+
+  <!-- Sidebar -->
+  <nav class="sidebar">
+    <div class="sidebar-icon active">🏠</div>
+    <div class="sidebar-icon">📍</div>
+    <div class="sidebar-icon">➕</div>
+    <div class="sidebar-icon">🔔</div>
+    <div class="sidebar-icon">💬</div>
+    <div class="sidebar-icon">⚙️</div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Profile Section -->
+    <section class="profile-section">
+      <div class="profile-avatar">
+        <img src="/profile/dp/<%= user._id %>" alt="Profile Picture" />
+      </div>
+      <h1 class="profile-name"><%= user.fullname %></h1>
+      <% if (user.instagram) { %>
+        <div class="profile-instagram">Instagram: <%= user.instagram %></div>
+      <% } %>
+      <div class="profile-handle">📌 <%= user.username %> • <%= user.gender || '—' %></div>
+
+      <div class="follower-stats">
+        <div class="stat">
+          <span class="stat-number"><%= user.followers ? user.followers.length : 0 %></span> followers
+        </div>
+        <div class="stat">
+          <span class="stat-number"><%= user.following ? user.following.length : 0 %></span> following
+        </div>
+      </div>
+
+      <div class="profile-actions">
+        <button class="btn btn-secondary" id="editBtn">Edit profile</button>
+      </div>
+    </section>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <div class="tab active">Created</div>
+      <div class="tab">Saved</div>
+    </div>
+
+    <!-- Pins Grid -->
+    <div class="pins-grid">
+      <% if (user.posts && user.posts.length > 0) { %>
+        <% user.posts.forEach(post => { %>
+          <div class="pin-card">
+            <div class="pin-image">
+              <div class="pin-overlay"><%= post.title %></div>
+            </div>
+          </div>
+        <% }) %>
+      <% } else { %>
+        <p>No pins yet.</p>
+      <% } %>
+    </div>
+  </main>
+
+  <!-- Edit Profile Modal -->
+  <div id="editModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <form action="/profile/edit" method="POST" enctype="multipart/form-data">
+        <label>Full Name</label>
+        <input type="text" name="fullname" value="<%= user.fullname %>" required>
+
+        <label>Username</label>
+        <input type="text" name="username" value="<%= user.username %>" required>
+
+        <label>Instagram</label>
+        <input type="text" name="instagram" value="<%= user.instagram || '' %>">
+
+        <label>Gender</label>
+        <select name="gender">
+          <option value="male" <%= user.gender==='male' ? 'selected':'' %>>Male</option>
+          <option value="female" <%= user.gender==='female' ? 'selected':'' %>>Female</option>
+          <option value="other" <%= user.gender==='other' ? 'selected':'' %>>Other</option>
+        </select>
+
+        <label>Profile Picture</label>
+        <input type="file" name="dp">
+
+        <button type="submit" class="btn btn-primary">Save</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById("editModal");
+    const btn = document.getElementById("editBtn");
+    const span = document.querySelector(".close");
+
+    btn.onclick = () => modal.classList.remove("hidden");
+    span.onclick = () => modal.classList.add("hidden");
+    window.onclick = (event) => {
+      if (event.target == modal) modal.classList.add("hidden");
+    };
+  </script>
+</body>
+</html>
