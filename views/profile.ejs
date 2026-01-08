@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pinterest Profile - <%= user.fullname %></title>
   <link rel="stylesheet" href="/Stylesheets/profile.css">
+  <link rel="stylesheet" href="/Stylesheets/create.css">
 </head>
 <body>
   <!-- Header -->
   <header class="header">
     <div class="header-left">
       <div class="pinterest-logo">P</div>
-      <button class="back-arrow">←</button>
       <div class="search-container">
         <div class="search-icon">🔍</div>
         <input type="text" class="search-bar" placeholder="Search your Pins">
@@ -27,12 +27,9 @@
 
   <!-- Sidebar -->
   <nav class="sidebar">
-    <div class="sidebar-icon active">🏠</div>
-    <div class="sidebar-icon">📍</div>
-    <div class="sidebar-icon">➕</div>
-    <div class="sidebar-icon">🔔</div>
-    <div class="sidebar-icon">💬</div>
-    <div class="sidebar-icon">⚙️</div>
+    <button class="sidebar-icon active">🏠</button>
+    <button class="sidebar-icon" id="createBtn">➕</button>
+    <button class="sidebar-icon">🔔</button>
   </nav>
 
   <!-- Main Content -->
@@ -40,7 +37,7 @@
     <!-- Profile Section -->
     <section class="profile-section">
       <div class="profile-avatar">
-        <img src="/profile/dp/<%= user._id %>" alt="Profile Picture" />
+        <img src="/profile/dp/<%= user._id %>" alt="Profile" />
       </div>
       <h1 class="profile-name"><%= user.fullname %></h1>
       <% if (user.instagram) { %>
@@ -73,9 +70,19 @@
       <% if (user.posts && user.posts.length > 0) { %>
         <% user.posts.forEach(post => { %>
           <div class="pin-card">
-            <div class="pin-image">
-              <div class="pin-overlay"><%= post.title %></div>
+            <div class="pins-grid">
+              <% if (user.posts && user.posts.length > 0) { %>
+                <% user.posts.forEach(post => { %>
+                  <div class="pin-card">
+                    <img src="<%= post.image %>" class="pin-image" />
+                    <div class="pin-overlay"><%= post.postText %></div>
+                  </div>
+                <% }) %>
+              <% } else { %>
+                <p>No pins yet.</p>
+              <% } %>
             </div>
+
           </div>
         <% }) %>
       <% } else { %>
@@ -85,44 +92,180 @@
   </main>
 
   <!-- Edit Profile Modal -->
-  <div id="editModal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <form action="/profile/edit" method="POST" enctype="multipart/form-data">
-        <label>Full Name</label>
-        <input type="text" name="fullname" value="<%= user.fullname %>" required>
+  <div id="editModal" class="modal hidden"> 
+  <div class="modal-content"> 
+    <span class="close">&times;</span> 
+    
+    <h2>Edit profile</h2>
+    <p>Keep your personal details private. Information you add here is visible to anyone who can view your profile.</p>
+    
+    <form action="/profile/edit" method="POST" enctype="multipart/form-data"> 
+      
+      <!-- Photo Section -->
+      <div>
+        <label>Photo</label>
+        <div class="photo-upload">
+          <div class="profile-pic-preview">
+            💡
+          </div>
+          <label for="fileInput" class="change-photo-btn">Change</label>
+          <input type="file" id="fileInput" name="dp" accept="image/*">
+        </div>
+      </div>
 
-        <label>Username</label>
-        <input type="text" name="username" value="<%= user.username %>" required>
+      <!-- First Name -->
+      <div>
+        <label>First name <span class="required">*</span></label>
+        <input type="text" name="firstname" value="<%= user.fullname.split(' ')[0] %>" required>
+      </div>
 
-        <label>Instagram</label>
-        <input type="text" name="instagram" value="<%= user.instagram || '' %>">
+      <!-- Last Name -->
+      <div>
+        <label>Last name</label>
+        <input type="text" name="lastname" value="<%= user.fullname.split(' ').slice(1).join(' ') %>">
+      </div>
 
-        <label>Gender</label>
-        <select name="gender">
-          <option value="male" <%= user.gender==='male' ? 'selected':'' %>>Male</option>
-          <option value="female" <%= user.gender==='female' ? 'selected':'' %>>Female</option>
-          <option value="other" <%= user.gender==='other' ? 'selected':'' %>>Other</option>
-        </select>
+      <!-- About -->
+      <div>
+        <label>About</label>
+        <textarea name="instagram" placeholder="Instagram: @charvi__"><%= user.instagram || '' %></textarea>
+      </div>
 
-        <label>Profile Picture</label>
-        <input type="file" name="dp">
+      <!-- Pronouns -->
+<div class="pronouns-section">
+  <label>Pronouns</label>
 
-        <button type="submit" class="btn btn-primary">Save</button>
-      </form>
-    </div>
+  <div class="pronouns-display" id="pronounsDisplay" onclick="togglePronounsDropdown()">
+    <span style="color: #999;">Select pronouns</span>
   </div>
 
-  <script>
-    const modal = document.getElementById("editModal");
-    const btn = document.getElementById("editBtn");
-    const span = document.querySelector(".close");
+  <div class="pronouns-dropdown hidden" id="pronounsDropdown">
+    <div class="pronoun-option" onclick="selectPronoun('she/her')">she/her</div>
+    <div class="pronoun-option" onclick="selectPronoun('he/him')">he/him</div>
+    <div class="pronoun-option" onclick="selectPronoun('they/them')">they/them</div>
+    <div class="pronoun-option" onclick="selectPronoun('ze/zir')">ze/zir</div>
+    <div class="pronoun-option" onclick="selectPronoun('xe/xem')">xe/xem</div>
+    <div class="pronoun-option" onclick="selectPronoun('prefer not to say')">prefer not to say</div>
+  </div>
 
-    btn.onclick = () => modal.classList.remove("hidden");
-    span.onclick = () => modal.classList.add("hidden");
-    window.onclick = (event) => {
-      if (event.target == modal) modal.classList.add("hidden");
-    };
-  </script>
+  <input type="hidden" name="pronouns" id="pronounsInput" value="">
+
+  <p class="pronouns-help">
+    Choose up to 2 sets of pronouns to appear on your profile. You can edit or remove them any time.
+  </p>
+</div>
+
+
+      <!-- Website -->
+      <div>
+        <label>Website</label>
+        <input type="url" name="website" placeholder="https://" value="<%= user.website || '' %>">
+        <p class="field-helper">Add a link to drive traffic to your site</p>
+      </div>
+
+      <!-- Username -->
+      <div>
+        <label>Username</label>
+        <input type="text" name="username" value="<%= user.username %>" required>
+        <p class="username-preview">www.pinterest.com/charviagwl04</p>
+      </div>
+
+      <!-- Gender (optional, hidden or remove if not needed) -->
+      <input type="hidden" name="gender" value="<%= user.gender || 'other' %>">
+
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div> 
+
+</div>
+<%- include('create') %>
+<!-- <script src="/Scripts/createMenu.js"></script> -->
+<script src="/scripts/createMenu.js"></script>
+<script>
+  const modal = document.getElementById("editModal");
+  const btn = document.getElementById("editBtn");
+  const span = document.querySelector(".close");
+  
+  btn.onclick = () => modal.classList.remove("hidden");
+  span.onclick = () => modal.classList.add("hidden");
+  window.onclick = (event) => {
+    if (event.target == modal) modal.classList.add("hidden");
+  };
+  
+  let selectedPronouns = [];
+  
+  function togglePronounsDropdown() {
+    const dropdown = document.getElementById('pronounsDropdown');
+    dropdown.classList.toggle('hidden');
+    updateDropdownStyles();
+  }
+  
+  function selectPronoun(pronoun) {
+    if (selectedPronouns.includes(pronoun)) {
+      // If already selected, remove it
+      selectedPronouns = selectedPronouns.filter(p => p !== pronoun);
+    } else {
+      if (selectedPronouns.length >= 1) {
+        alert("You can only select up to 1 pronouns.");
+        return;
+      }
+      selectedPronouns.push(pronoun);
+    }
+    
+    updatePronounsDisplay();
+    updateDropdownStyles();
+  }
+  
+function updatePronounsDisplay() {
+  const display = document.getElementById('pronounsDisplay');
+  const input = document.getElementById('pronounsInput');
+  
+  if (selectedPronouns.length === 0) {
+    display.innerHTML = '<span style="color: #999;">Select pronouns</span>';
+  } else {
+    display.innerHTML = selectedPronouns
+    .map(
+      pronoun => `
+      <span class="pronoun-tag">
+        ${pronoun}
+        <span class="remove" onclick="removePronoun(event, '${pronoun}')">&times;</span>
+        </span>`
+      )
+      .join('');
+    }
+    
+    input.value = selectedPronouns.join(', ');
+  }
+  
+  function removePronoun(event, pronoun) {
+    event.stopPropagation();
+    selectedPronouns = selectedPronouns.filter(p => p !== pronoun);
+    updatePronounsDisplay();
+    updateDropdownStyles();
+  }
+  
+  function updateDropdownStyles() {
+    const options = document.querySelectorAll('.pronoun-option');
+    options.forEach(option => {
+      const pronoun = option.textContent.trim();
+      if (selectedPronouns.includes(pronoun)) {
+        option.classList.add('selected');
+    } else {
+      option.classList.remove('selected');
+    }
+  });
+}
+
+// Hide dropdown if clicked outside
+document.addEventListener('click', (event) => {
+  const section = document.querySelector('.pronouns-section');
+  const dropdown = document.getElementById('pronounsDropdown');
+  if (!section.contains(event.target)) {
+    dropdown.classList.add('hidden');
+  }
+});
+
+</script>
+
 </body>
 </html>

@@ -35,6 +35,8 @@ passport.deserializeUser(userModel.deserializeUser());
 
 app.use(logger('dev'));
 app.use(cookieParser());
+console.log("Static path:", path.join(__dirname, "public"));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 

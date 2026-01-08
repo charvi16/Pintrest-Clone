@@ -1,0 +1,34 @@
+<!-- CREATE POPUP -->
+
+<div id="createModal" class="create-modal hidden" style="background:white; width:300px; height:200px;">
+
+  <h2>Simple Modal Test</h2>
+  <!-- STEP 1: UPLOAD -->
+  <div class="create-box step step-1">
+    <h2>Upload your Pin</h2>
+
+    <label for="uploadInput" class="upload-area">
+      <span class="upload-icon">⬆</span>
+      <p>Click to upload image/video</p>
+    </label>
+
+    <input type="file" id="uploadInput" accept="image/*,video/*" hidden>
+
+    <button id="nextBtn" class="next-btn disabled" disabled>Next</button>
+  </div>
+
+  <!-- STEP 2: CAPTION -->
+  <div class="create-box step step-2 hidden">
+    <h2>Add caption</h2>
+
+    <div class="preview-box">
+      <img id="previewImage" class="hidden">
+      <video id="previewVideo" controls class="hidden"></video>
+    </div>
+
+    <textarea id="captionInput" placeholder="Write a caption..."></textarea>
+
+    <button id="postBtn" class="post-btn">Post</button>
+  </div>
+
+</div>

@@ -77,6 +77,21 @@ router.get('/createPost',async (req, res) => {
     res.send("done");
 })
 
+router.post("/create", upload.single("image"), async (req, res) => {
+  try {
+    const post = await Post.create({
+      postText: req.body.postText,
+      image: `/uploads/${req.file.filename}`,
+      createdBy: req.user._id,
+    });
+
+    res.redirect("/profile");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Upload failed");
+  }
+});
+
 router.post('/register', async (req, res, next) => {
     const { fullname, email, password } = req.body;
 
@@ -112,8 +127,9 @@ router.post('/register', async (req, res, next) => {
 
 router.post('/profile/edit', upload.single('dp'), async (req, res) => {
   try {
-    const { fullname, username, instagram, gender } = req.body;
-    const updateData = { fullname, username, instagram, gender };
+    const { firstname, lastname, username, instagram, pronouns, website} = req.body;
+    const updateData = { firstname, lastname, username, instagram, pronouns, website };
+    const pronounsArray = pronouns ? pronouns.split(',') : [];
 
     // If user uploaded a dp, save buffer + mimetype
     if (req.file) {
